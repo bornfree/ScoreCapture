@@ -26,9 +26,9 @@ public class Frame {
         Imgproc.cvtColor( yuv, mFrame, Imgproc.COLOR_YUV2GRAY_NV21, 1 );
     }
 
-    public void process()
+    public void process(int debugMode)
     {
-        processFrame(mFrame.getNativeObjAddr());
+        processFrame(mFrame.getNativeObjAddr(), debugMode);
         mEndTime = System.nanoTime();
     }
 
@@ -43,5 +43,5 @@ public class Frame {
         return mFrame;
     }
 
-    public native void processFrame(long nativeObjAddr);
+    public native void processFrame(long nativeObjAddr, int debugMode);
 }

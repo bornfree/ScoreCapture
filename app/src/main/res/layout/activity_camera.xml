@@ -25,7 +25,7 @@
         <FrameLayout
             android:layout_width="60dip"
             android:layout_height="60dip"
-            android:layout_margin="10dip"
+            android:layout_margin="0dip"
             android:layout_gravity="left|top"
             android:background="@drawable/rounded_square">
 
@@ -33,7 +33,7 @@
         <FrameLayout
             android:layout_width="60dip"
             android:layout_height="60dip"
-            android:layout_margin="10dip"
+            android:layout_margin="0dip"
             android:layout_gravity="right|top"
             android:background="@drawable/rounded_square">
 
@@ -42,7 +42,7 @@
         <FrameLayout
             android:layout_width="60dip"
             android:layout_height="60dip"
-            android:layout_margin="10dip"
+            android:layout_margin="0dip"
             android:layout_gravity="bottom|left"
             android:background="@drawable/rounded_square">
 
@@ -51,7 +51,7 @@
         <FrameLayout
             android:layout_width="60dip"
             android:layout_height="60dip"
-            android:layout_margin="10dip"
+            android:layout_margin="0dip"
             android:layout_gravity="bottom|right"
             android:background="@drawable/rounded_square">
 
@@ -72,6 +72,31 @@
         android:layout_gravity="bottom|center"
         android:background="@color/sublime_grey"
         android:id="@+id/remainingPortion">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center|top">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perspective"
+                android:textColor="@color/white"
+                android:id="@+id/debugPerspective"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Section 1"
+                android:textColor="@color/white"
+                android:id="@+id/debugSection1"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Section 2"
+                android:textColor="@color/white"
+                android:id="@+id/debugSection2"/>
+
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

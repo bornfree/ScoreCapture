@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.ViewTreeObserver;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -29,6 +30,7 @@ public class CameraActivity extends AppCompatActivity {
     private int mContainerWidth = 0;
     private int mContainerHeight = 0;
     private ImageView mMatDebug;
+    private CheckBox mDebugPerspective, mDebugSection1, mDebugSection2;
 
     static {
         if (!OpenCVLoader.initDebug()) {
@@ -70,11 +72,24 @@ public class CameraActivity extends AppCompatActivity {
         @Override
         public void onPreviewFrame(byte[] data, Camera camera) {
             Frame frame = new Frame(data, mFrameSize);
-            frame.process();
+            int debugIndex = getDebugIndex();
+            frame.process(debugIndex);
             frame.printProcessingTime();
-            useResults(frame);
+            useResults(frame, debugIndex);
         }
     };
+
+    public int getDebugIndex()
+    {
+        int db = 0;
+        if(mDebugPerspective.isChecked())
+            db = 1;
+        if(mDebugSection1.isChecked())
+            db = 2;
+        if(mDebugSection2.isChecked())
+            db = 3;
+        return db;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +97,10 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         mMatDebug = (ImageView) findViewById(R.id.matDebug);
+        mDebugPerspective = (CheckBox) findViewById(R.id.debugPerspective);
+        mDebugSection1 = (CheckBox) findViewById(R.id.debugSection1);
+        mDebugSection2 = (CheckBox) findViewById(R.id.debugSection2);
+
         mContainer = (FrameLayout) findViewById(R.id.container);
         ViewTreeObserver vto = mContainer.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(previewSizeAdjuster);
@@ -193,11 +212,17 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    public void useResults(final Frame frame) {
+    public void useResults(final Frame frame, final int debugMode) {
         this.runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
+                if(debugMode == 0)
+                {
+                    mMatDebug.setImageBitmap(null);
+                    return;
+                }
+                    
                 Bitmap resultBitmap = Bitmap.createBitmap(frame.getMat().cols(), frame.getMat().rows(), Bitmap.Config.ARGB_8888);
                 Utils.matToBitmap(frame.getMat(), resultBitmap);
                 mMatDebug.setImageBitmap(resultBitmap);
