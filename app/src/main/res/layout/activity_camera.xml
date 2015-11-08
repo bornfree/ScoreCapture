@@ -1,0 +1,86 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#333333"
+    tools:context="com.cameraomr.android.CameraActivity"
+    android:id="@+id/container">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <FrameLayout
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+
+        ></FrameLayout>
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:id="@+id/markers_frame">
+
+        <FrameLayout
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_margin="10dip"
+            android:layout_gravity="left|top"
+            android:background="@drawable/rounded_square">
+
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_margin="10dip"
+            android:layout_gravity="right|top"
+            android:background="@drawable/rounded_square">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_margin="10dip"
+            android:layout_gravity="bottom|left"
+            android:background="@drawable/rounded_square">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_margin="10dip"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/rounded_square">
+
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/matDebug"
+            android:layout_gravity="center"
+            />
+
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:background="@color/sublime_grey"
+        android:id="@+id/remainingPortion">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Place dots inside the squares to scan"
+            android:id="@+id/textView3"
+            android:layout_gravity="center"
+            android:textColor="@color/white"/>
+    </FrameLayout>
+
+
+
+</FrameLayout>

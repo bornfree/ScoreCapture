@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CameraOMR</string>
+    <string name="active_key_title">Active Key</string>
+    <string name="button_start_checking">Start Checking</string>
+    <string name="button_set_key">Set Key</string>
+    <string name="button_add_key">Add Key</string>
+
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>
