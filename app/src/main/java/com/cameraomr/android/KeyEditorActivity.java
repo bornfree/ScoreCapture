@@ -1,26 +1,22 @@
 package com.cameraomr.android;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cameraomr.android.com.cameraomr.db.Key;
 import com.cameraomr.android.com.cameraomr.db.KeysDataSource;
-import com.cameraomr.android.com.cameraomr.db.MySQLiteOpenHelper;
+import com.cameraomr.android.com.cameraomr.db.Template;
+import com.cameraomr.android.com.cameraomr.db.TemplatesDataSource;
 
 import java.util.ArrayList;
 
@@ -30,9 +26,10 @@ public class KeyEditorActivity extends AppCompatActivity {
     private LinearLayout mKeyRows;
     private String mKeyTitle;
     private String mKeyDate;
-    private int mKeyLength;
+    private String mKeyTemplateId;
     private Button mSave;
     private String mKeyAnswers = "";
+    private Template template;
 
     private KeysDataSource datasource;
     private SharedPreferences sharedPref;
@@ -50,7 +47,7 @@ public class KeyEditorActivity extends AppCompatActivity {
         mKeyRows = (LinearLayout) findViewById(R.id.keyRows);
         mSave = (Button) findViewById(R.id.saveKey);
 
-        mKeyLength = getIntent().getIntExtra("key_length", 20);
+        mKeyTemplateId = getIntent().getStringExtra("key_template_id");
         mKeyTitle = getIntent().getStringExtra("key_title");
         mKeyDate = getIntent().getStringExtra("key_date");
         addKeyTemplate();
@@ -58,7 +55,7 @@ public class KeyEditorActivity extends AppCompatActivity {
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i=0 ; i< mKeyLength; i++)
+                for(int i=0 ; i< template.getNum_answers(); i++)
                 {
                     LinearLayout keyRow = (LinearLayout) mKeyRows.getChildAt(i);
                     RadioGroup rGroup = (RadioGroup) keyRow.findViewById(R.id.keyOptions);
@@ -75,7 +72,7 @@ public class KeyEditorActivity extends AppCompatActivity {
                 }
 
                 //Toast.makeText(KeyEditorActivity.this, mKeyTitle + mKeyDate + mKeyAnswers, Toast.LENGTH_LONG).show();
-                Key key = datasource.createKey(mKeyTitle, mKeyDate, mKeyAnswers);
+                Key key = datasource.createKey(mKeyTemplateId, mKeyTitle, mKeyDate, mKeyAnswers);
 
                 // LandingActivity needs to know these details
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -107,10 +104,15 @@ public class KeyEditorActivity extends AppCompatActivity {
 
     public void addKeyTemplate()
     {
+        TemplatesDataSource datasource = new TemplatesDataSource(this);
+        datasource.open();
+        template = datasource.getTemplate(mKeyTemplateId);
+        datasource.close();
+
         ArrayList<KeyRow> keyRowList = new ArrayList<KeyRow>();
         LayoutInflater inflator = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        for(int i=0 ; i< mKeyLength; i++)
+        for(int i=0 ; i< template.getNum_answers(); i++)
         {
             LinearLayout keyRow = (LinearLayout) inflator.inflate(R.layout.component_option_row, null);
             if(i%2 != 0) {

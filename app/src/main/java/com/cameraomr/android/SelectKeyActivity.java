@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.cameraomr.android.com.cameraomr.db.Key;
 import com.cameraomr.android.com.cameraomr.db.KeysDataSource;
+import com.cameraomr.android.com.cameraomr.db.Template;
+import com.cameraomr.android.com.cameraomr.db.TemplatesDataSource;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class SelectKeyActivity extends AppCompatActivity {
 
     private ListView mKeyList;
     private KeysDataSource datasource;
+    private TemplatesDataSource tdatasource;
     private KeysAdapter kAdapter;
 
     @Override
@@ -32,7 +35,17 @@ public class SelectKeyActivity extends AppCompatActivity {
 
         datasource = new KeysDataSource(this);
         datasource.open();
+
+        tdatasource = new TemplatesDataSource(this);
+        tdatasource.open();
+
         List<Key> keys = datasource.getAllKeys();
+        for(Key k:keys)
+        {
+            Template t = tdatasource.getTemplate(Long.toString(k.getTemplate_id()));
+            String title = "" + t.getNum_answers() + " Questions, " + t.getNum_options() + " Options";
+            k.setTemplate_title(title);
+        }
 
         kAdapter = new KeysAdapter(keys, SelectKeyActivity.this);
         mKeyList.setAdapter(kAdapter);
@@ -41,12 +54,14 @@ public class SelectKeyActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         datasource.open();
+        tdatasource.open();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         datasource.close();
+        tdatasource.close();
         super.onPause();
     }
 

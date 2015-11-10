@@ -16,6 +16,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.cameraomr.android.com.cameraomr.db.Key;
+import com.cameraomr.android.com.cameraomr.db.KeysDataSource;
+import com.cameraomr.android.com.cameraomr.db.Template;
+import com.cameraomr.android.com.cameraomr.db.TemplatesDataSource;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,9 +33,9 @@ public class TemplateChooserActivity extends AppCompatActivity {
     private Spinner mTemplateOptions;
     private EditText mTitle;
     private EditText mDate;
-    private final List<String> mTemplateList = new ArrayList<String>();
-    private final Integer[] key_lengths={5, 40, 50};
-    private int key_length = 20, key_options = 4;
+    private final List<String> mTemplateTitles = new ArrayList<String>();
+    private final List<String> mTemplateIds = new ArrayList<String>();
+    private String key_template_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class TemplateChooserActivity extends AppCompatActivity {
         mTemplateOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                key_length = key_lengths[position];
+                key_template_id = mTemplateIds.get(position);
             }
 
             @Override
@@ -57,14 +62,12 @@ public class TemplateChooserActivity extends AppCompatActivity {
         mTemplateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mTitle.getText().toString().trim().length() == 0)
-                {
-                    Toast.makeText( TemplateChooserActivity.this, "Please provide a title", Toast.LENGTH_SHORT).show();
+                if (mTitle.getText().toString().trim().length() == 0) {
+                    Toast.makeText(TemplateChooserActivity.this, "Please provide a title", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent keyIntent = new Intent(TemplateChooserActivity.this, KeyEditorActivity.class);
-                keyIntent.putExtra("key_length", key_length);
-                keyIntent.putExtra("key_options", key_options);
+                keyIntent.putExtra("key_template_id", key_template_id);
                 keyIntent.putExtra("key_title", mTitle.getText().toString());
                 keyIntent.putExtra("key_date", mDate.getText().toString());
                 startActivity(keyIntent);
@@ -74,16 +77,23 @@ public class TemplateChooserActivity extends AppCompatActivity {
 
     public void setupTemplates()
     {
-        mTemplateList.add("20 Questions, 4 Options");
-        mTemplateList.add("40 Questions, 4 Options");
-        mTemplateList.add("50 Questions, 5 Options");
+        TemplatesDataSource datasource = new TemplatesDataSource(this);
+        datasource.open();
+        List<Template> templates = datasource.getAllTemplates();
+        for(Template template:templates)
+        {
+            String title = "" + template.getNum_answers() + " Questions, " + template.getNum_options() +" Options";
+            mTemplateTitles.add(title);
+            mTemplateIds.add("" + template.getId());
+        }
+        datasource.close();
 
 
         mTemplateButton = (Button) findViewById(R.id.nextButton);
         mTemplateOptions = (Spinner) findViewById(R.id.templateChoices);
 
         ArrayAdapter<String> templateAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, mTemplateList);
+                android.R.layout.simple_list_item_1, mTemplateTitles);
         templateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mTemplateOptions.setAdapter(templateAdapter);
     }

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cameraomr.android.com.cameraomr.db.Key;
+import com.cameraomr.android.com.cameraomr.db.Template;
 
 public class KeysAdapter extends BaseAdapter {
 
@@ -55,13 +56,15 @@ public class KeysAdapter extends BaseAdapter {
         }
 
         final TextView keyTitle = (TextView) v.findViewById(R.id.keyTitle);
+        final TextView keyTemplateTitle  = (TextView) v.findViewById(R.id.keyTemplateTitle);
         final TextView keyDate  = (TextView) v.findViewById(R.id.keyDate);
         final TextView keyId = (Button) v.findViewById(R.id.keyIdButton);
         final TextView keyId2 = (Button) v.findViewById(R.id.keyIdButton2);
 
         Key key = (Key) getItem(position);
-        
+
         keyTitle.setText(key.getTitle());
+        keyTemplateTitle.setText(key.getTemplate_title());
         keyDate.setText(key.getDate());
         keyId.setTag(Long.valueOf(key.getId()));
         keyId2.setTag(Long.valueOf(key.getId()));

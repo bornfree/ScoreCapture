@@ -70,6 +70,7 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //resetSharedPreferences();
         sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         activeKeySet = sharedPref.getBoolean(getString(R.string.active_key_set), false);
         activeKeyId   = sharedPref.getString(getString(R.string.active_key_id), "");
@@ -84,5 +85,13 @@ public class LandingActivity extends AppCompatActivity {
         {
             mActiveKeyTitle.setText("No active key set");
         }
+    }
+
+    public void resetSharedPreferences()
+    {
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.active_key_set), false);
+        editor.commit();
     }
 }

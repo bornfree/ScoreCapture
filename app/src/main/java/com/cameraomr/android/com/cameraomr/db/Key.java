@@ -36,8 +36,35 @@ public class Key {
         this.answers = answers;
     }
 
+    public long getTemplate_id() {
+        return template_id;
+    }
+
+    public void setTemplate_id(long template_id) {
+        this.template_id = template_id;
+    }
+
+    public Template getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(Template template) {
+        this.template = template;
+    }
+
+    public String getTemplate_title() {
+        return template_title;
+    }
+
+    public void setTemplate_title(String template_title) {
+        this.template_title = template_title;
+    }
+
     private long id;
+    private long template_id;
     private String title;
+    private String template_title;
     private String date;
     private String answers;
+    private Template template;
 }

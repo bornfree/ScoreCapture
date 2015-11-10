@@ -18,7 +18,7 @@ import java.util.List;
 public class KeysDataSource {
     private SQLiteDatabase database;
     private MySQLiteOpenHelper dbHelper;
-    private String[] allColumns = { MySQLiteOpenHelper.COLUMN_ID,
+    private String[] allColumns = { MySQLiteOpenHelper.COLUMN_ID, MySQLiteOpenHelper.COLUMN_TEMPLATE_ID,
             MySQLiteOpenHelper.COLUMN_TITLE, MySQLiteOpenHelper.COLUMN_DATE, MySQLiteOpenHelper.COLUMN_ANSWERS };
 
     public KeysDataSource(Context context) {
@@ -46,8 +46,9 @@ public class KeysDataSource {
         return key;
     }
 
-    public Key createKey(String title, String date, String answers) {
+    public Key createKey(String template_id, String title, String date, String answers) {
         ContentValues values = new ContentValues();
+        values.put(MySQLiteOpenHelper.COLUMN_TEMPLATE_ID, Long.valueOf(template_id));
         values.put(MySQLiteOpenHelper.COLUMN_TITLE, title);
         values.put(MySQLiteOpenHelper.COLUMN_DATE, date);
         values.put(MySQLiteOpenHelper.COLUMN_ANSWERS, answers);
@@ -78,8 +79,9 @@ public class KeysDataSource {
     public List<Key> getAllKeys() {
         List<Key> keys = new ArrayList<Key>();
 
+        String condition = "date(" + MySQLiteOpenHelper.COLUMN_DATE + ") ASC";
         Cursor cursor = database.query(MySQLiteOpenHelper.TABLE_KEYS,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, null, condition);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -95,9 +97,10 @@ public class KeysDataSource {
     private Key cursorToKey(Cursor cursor) {
         Key key = new Key();
         key.setId(cursor.getLong(0));
-        key.setTitle(cursor.getString(1));
-        key.setDate(cursor.getString(2));
-        key.setAnswers(cursor.getString(3));
+        key.setTemplate_id(cursor.getLong(1));
+        key.setTitle(cursor.getString(2));
+        key.setDate(cursor.getString(3));
+        key.setAnswers(cursor.getString(4));
         return key;
     }
 }
