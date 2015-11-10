@@ -17,9 +17,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CameraActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-
+        <activity
+            android:name=".CameraActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".TemplateChooserActivity"
+            android:label="Basic Details" >
+        </activity>
+        <activity
+            android:name=".KeyEditorActivity"
+            android:label="Key" >
+        </activity>
+        <activity android:name=".SelectKeyActivity"
+            android:label="Available Keys">
         </activity>
     </application>
 

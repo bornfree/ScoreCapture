@@ -1,6 +1,5 @@
 package com.cameraomr.android;
 
-import android.app.ActionBar;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Build;
@@ -9,7 +8,6 @@ import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
@@ -222,7 +220,7 @@ public class CameraActivity extends AppCompatActivity {
                     mMatDebug.setImageBitmap(null);
                     return;
                 }
-                    
+
                 Bitmap resultBitmap = Bitmap.createBitmap(frame.getMat().cols(), frame.getMat().rows(), Bitmap.Config.ARGB_8888);
                 Utils.matToBitmap(frame.getMat(), resultBitmap);
                 mMatDebug.setImageBitmap(resultBitmap);

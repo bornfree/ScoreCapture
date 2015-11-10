@@ -8,4 +8,7 @@
     <string name="title_activity_camera">CameraActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="active_key_set">ACTIVE_KEY_SET</string>
+    <string name="active_key_id">ACTIVE_KEY_ID</string>
+    <string name="preference_file_key">cameraomr.prefs</string>
 </resources>

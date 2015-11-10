@@ -19,8 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Chemistry 16th Nov"
-        android:id="@+id/textView2"
+        android:text="No Keys Available"
+        android:id="@+id/activeKeyTitle"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
 
