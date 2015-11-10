@@ -1,12 +1,14 @@
 /**
  * Created by harsha on 10/11/15.
  */
-package com.cameraomr.android.com.cameraomr.db;
+package com.cameraomr.android.db;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.cameraomr.android.classes.Section;
 
 import java.util.ArrayList;
 import java.util.List;

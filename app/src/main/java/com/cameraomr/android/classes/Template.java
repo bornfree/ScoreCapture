@@ -1,4 +1,4 @@
-package com.cameraomr.android.com.cameraomr.db;
+package com.cameraomr.android.classes;
 
 import java.util.List;
 

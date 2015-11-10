@@ -1,13 +1,12 @@
-package com.cameraomr.android.com.cameraomr.db;
+package com.cameraomr.android.db;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.cameraomr.android.R;
+import com.cameraomr.android.classes.Key;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,10 +13,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.cameraomr.android.com.cameraomr.db.Key;
-import com.cameraomr.android.com.cameraomr.db.KeysDataSource;
-import com.cameraomr.android.com.cameraomr.db.Template;
-import com.cameraomr.android.com.cameraomr.db.TemplatesDataSource;
+import com.cameraomr.android.classes.Key;
+import com.cameraomr.android.db.KeysDataSource;
+import com.cameraomr.android.classes.Template;
+import com.cameraomr.android.db.TemplatesDataSource;
+import com.cameraomr.android.utils.KeyRow;
 
 import java.util.ArrayList;
 

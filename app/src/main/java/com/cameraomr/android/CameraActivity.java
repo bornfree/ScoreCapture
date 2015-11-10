@@ -13,9 +13,22 @@ import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.cameraomr.android.classes.Frame;
+import com.cameraomr.android.classes.Key;
+import com.cameraomr.android.classes.Section;
+import com.cameraomr.android.classes.SectionNDK;
+import com.cameraomr.android.classes.Template;
+import com.cameraomr.android.db.KeysDataSource;
+import com.cameraomr.android.db.SectionsDataSource;
+import com.cameraomr.android.db.TemplatesDataSource;
+import com.cameraomr.android.utils.CameraPreview;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
+
+import java.util.List;
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -28,7 +41,12 @@ public class CameraActivity extends AppCompatActivity {
     private int mContainerWidth = 0;
     private int mContainerHeight = 0;
     private ImageView mMatDebug;
+    private TextView mScore;
     private CheckBox mDebugPerspective, mDebugSection1, mDebugSection2;
+    private KeysDataSource keydatasource;
+    private TemplatesDataSource templatesdatasource;
+    private SectionsDataSource sectionsdatasource;
+    private String mKeyId;
 
     static {
         if (!OpenCVLoader.initDebug()) {
@@ -39,6 +57,9 @@ public class CameraActivity extends AppCompatActivity {
             System.loadLibrary("CameraOMRNative");
         }
     }
+
+    public native void setTemplateProperties(int width, int height);
+    public native void setSections(SectionNDK[] sections);
 
     private ViewTreeObserver.OnGlobalLayoutListener previewSizeAdjuster = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
@@ -71,9 +92,9 @@ public class CameraActivity extends AppCompatActivity {
         public void onPreviewFrame(byte[] data, Camera camera) {
             Frame frame = new Frame(data, mFrameSize);
             int debugIndex = getDebugIndex();
-            frame.process(debugIndex);
+            int score = frame.process(debugIndex);
             frame.printProcessingTime();
-            useResults(frame, debugIndex);
+            useResults(frame, debugIndex, score);
         }
     };
 
@@ -95,9 +116,16 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         mMatDebug = (ImageView) findViewById(R.id.matDebug);
+        mScore = (TextView) findViewById(R.id.score);
         mDebugPerspective = (CheckBox) findViewById(R.id.debugPerspective);
         mDebugSection1 = (CheckBox) findViewById(R.id.debugSection1);
         mDebugSection2 = (CheckBox) findViewById(R.id.debugSection2);
+
+        keydatasource = new KeysDataSource(this);
+        templatesdatasource = new TemplatesDataSource(this);
+        sectionsdatasource = new SectionsDataSource(this);
+
+        mKeyId = getIntent().getStringExtra("key_id");
 
         mContainer = (FrameLayout) findViewById(R.id.container);
         ViewTreeObserver vto = mContainer.getViewTreeObserver();
@@ -109,6 +137,10 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        keydatasource.open();
+        templatesdatasource.open();
+        sectionsdatasource.open();
+        setKeyTemplateSections(mKeyId);
         if(mCamera == null)
         {
             newOpenCamera();
@@ -133,6 +165,36 @@ public class CameraActivity extends AppCompatActivity {
         FrameLayout frame = (FrameLayout) findViewById(R.id.fullscreen_content);
         frame.removeView(mPreview);
         releaseCamera();
+        keydatasource.close();
+        templatesdatasource.close();
+        sectionsdatasource.close();
+
+    }
+
+    public void setKeyTemplateSections(String keyId)
+    {
+
+
+        Key k = keydatasource.getKey(keyId);
+        if(k != null){
+
+            Template template = templatesdatasource.getTemplate(Long.toString(k.getTemplate_id()));
+            List<Section> sections = template.getSections();
+            SectionNDK[] sectionNDKs = new SectionNDK[sections.size()];
+
+            for(int i=0; i< sections.size(); i++)
+            {
+
+                Section section = sections.get(i);
+                String answerString = k.getAnswers().substring(i * 2 * section.getNum_answers(), (i+1)* 2 * section.getNum_answers() );
+                answerString = answerString.replace(";","");
+
+                SectionNDK sectionNDK = new SectionNDK(section, answerString);
+                sectionNDKs[i] = sectionNDK;
+            }
+            setTemplateProperties(template.getWidth(), template.getHeight());
+            setSections(sectionNDKs);
+        }
 
     }
 
@@ -210,11 +272,12 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    public void useResults(final Frame frame, final int debugMode) {
+    public void useResults(final Frame frame, final int debugMode, final int score) {
         this.runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
+                mScore.setText("Score: "+ score);
                 if(debugMode == 0)
                 {
                     mMatDebug.setImageBitmap(null);

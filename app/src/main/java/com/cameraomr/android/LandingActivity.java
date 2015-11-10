@@ -5,13 +5,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cameraomr.android.com.cameraomr.db.Key;
-import com.cameraomr.android.com.cameraomr.db.KeysDataSource;
+import com.cameraomr.android.classes.Key;
+import com.cameraomr.android.classes.Section;
+import com.cameraomr.android.classes.SectionNDK;
+import com.cameraomr.android.classes.Template;
+import com.cameraomr.android.db.KeysDataSource;
+import com.cameraomr.android.db.SectionsDataSource;
+import com.cameraomr.android.db.TemplatesDataSource;
+
+import java.util.List;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -20,7 +28,7 @@ public class LandingActivity extends AppCompatActivity {
     private Button mAddKey;
     private TextView mActiveKeyTitle;
     private SharedPreferences sharedPref;
-    private KeysDataSource datasource;
+    private KeysDataSource keydatasource;
 
     private boolean activeKeySet;
     private String activeKeyId;
@@ -35,6 +43,8 @@ public class LandingActivity extends AppCompatActivity {
         mAddKey        = (Button) findViewById(R.id.addKey);
         mActiveKeyTitle = (TextView) findViewById(R.id.activeKeyTitle);
 
+        keydatasource = new KeysDataSource(this);
+
         mStartChecking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +54,7 @@ public class LandingActivity extends AppCompatActivity {
                     return;
                 }
                 Intent cameraIntent = new Intent(LandingActivity.this, CameraActivity.class);
+                cameraIntent.putExtra("key_id", activeKeyId);
                 startActivity(cameraIntent);
 
             }
@@ -71,21 +82,32 @@ public class LandingActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //resetSharedPreferences();
+        //resetSharedPreferences();
+
+        keydatasource.open();
+
         sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         activeKeySet = sharedPref.getBoolean(getString(R.string.active_key_set), false);
         activeKeyId   = sharedPref.getString(getString(R.string.active_key_id), "");
         if(activeKeySet == true)
         {
-            datasource = new KeysDataSource(this);
-            datasource.open();
-            Key k = datasource.getKey(activeKeyId);
-            if(k != null)
+            Key k = keydatasource.getKey(activeKeyId);
+            if(k != null) {
                 mActiveKeyTitle.setText(k.getTitle());
+            }
         }else
         {
             mActiveKeyTitle.setText("No active key set");
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        keydatasource.close();
+    }
+
+
 
     public void resetSharedPreferences()
     {

@@ -1,4 +1,4 @@
-package com.cameraomr.android;
+package com.cameraomr.android.utils;
 
 
 

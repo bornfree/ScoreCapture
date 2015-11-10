@@ -16,10 +16,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.cameraomr.android.com.cameraomr.db.Key;
-import com.cameraomr.android.com.cameraomr.db.KeysDataSource;
-import com.cameraomr.android.com.cameraomr.db.Template;
-import com.cameraomr.android.com.cameraomr.db.TemplatesDataSource;
+import com.cameraomr.android.classes.Template;
+import com.cameraomr.android.db.TemplatesDataSource;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

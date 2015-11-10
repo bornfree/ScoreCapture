@@ -1,4 +1,4 @@
-package com.cameraomr.android.com.cameraomr.db;
+package com.cameraomr.android.classes;
 
 /**
  * Created by harsha on 9/11/15.

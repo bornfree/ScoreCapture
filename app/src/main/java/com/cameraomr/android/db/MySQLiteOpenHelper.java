@@ -1,4 +1,4 @@
-package com.cameraomr.android.com.cameraomr.db;
+package com.cameraomr.android.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -36,7 +36,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "cameraomr.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Database creation sql statement
     private static final String KEYS_TABLE_CREATE = "create table "
@@ -110,7 +110,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
         values.put(SECTION_COLUMN_HEIGHT, 432);
         values.put(SECTION_COLUMN_WIDTH, 172);
-        values.put(SECTION_COLUMN_TOP, 164);
+        values.put(SECTION_COLUMN_TOP, 161);
         values.put(SECTION_COLUMN_LEFT, 56);
         values.put(SECTION_COLUMN_NUM_ANSWERS, 10);
         long sId = db.insert(TABLE_SECTIONS, null, values);
@@ -120,7 +120,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
         values.put(SECTION_COLUMN_HEIGHT, 432);
         values.put(SECTION_COLUMN_WIDTH, 172);
-        values.put(SECTION_COLUMN_TOP, 164);
+        values.put(SECTION_COLUMN_TOP, 161);
         values.put(SECTION_COLUMN_LEFT, 283);
         values.put(SECTION_COLUMN_NUM_ANSWERS, 10);
         sId = db.insert(TABLE_SECTIONS, null, values);
@@ -138,7 +138,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
         values.put(SECTION_COLUMN_HEIGHT, 432);
         values.put(SECTION_COLUMN_WIDTH, 172);
-        values.put(SECTION_COLUMN_TOP, 164);
+        values.put(SECTION_COLUMN_TOP, 161);
         values.put(SECTION_COLUMN_LEFT, 56);
         values.put(SECTION_COLUMN_NUM_ANSWERS, 10);
         sId = db.insert(TABLE_SECTIONS, null, values);

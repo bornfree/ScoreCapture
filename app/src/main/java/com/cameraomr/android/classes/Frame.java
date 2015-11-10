@@ -1,4 +1,4 @@
-package com.cameraomr.android;
+package com.cameraomr.android.classes;
 
 /**
  * Created by harsha on 7/11/15.
@@ -26,10 +26,11 @@ public class Frame {
         Imgproc.cvtColor( yuv, mFrame, Imgproc.COLOR_YUV2GRAY_NV21, 1 );
     }
 
-    public void process(int debugMode)
+    public int process(int debugMode)
     {
-        processFrame(mFrame.getNativeObjAddr(), debugMode);
+        int score = processFrame(mFrame.getNativeObjAddr(), debugMode);
         mEndTime = System.nanoTime();
+        return score;
     }
 
     public void printProcessingTime()
@@ -43,5 +44,5 @@ public class Frame {
         return mFrame;
     }
 
-    public native void processFrame(long nativeObjAddr, int debugMode);
+    public native int processFrame(long nativeObjAddr, int debugMode);
 }
