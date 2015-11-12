@@ -37,7 +37,7 @@ public class KeysDataSource {
         Cursor cursor = database.query(MySQLiteOpenHelper.TABLE_KEYS,
                 allColumns, MySQLiteOpenHelper.COLUMN_ID + " = " + id, null,
                 null, null, null);
-        if(cursor == null)
+        if(cursor == null || cursor.getCount() == 0)
             return null;
         cursor.moveToFirst();
         Key key = cursorToKey(cursor);
@@ -78,12 +78,12 @@ public class KeysDataSource {
     public List<Key> getAllKeys() {
         List<Key> keys = new ArrayList<Key>();
 
-        String condition = "date(" + MySQLiteOpenHelper.COLUMN_DATE + ") ASC";
+        String condition = "date(" + MySQLiteOpenHelper.COLUMN_DATE + ") DESC";
         Cursor cursor = database.query(MySQLiteOpenHelper.TABLE_KEYS,
                 allColumns, null, null, null, null, condition);
 
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast() && cursor.getCount() > 0) {
             Key key = cursorToKey(cursor);
             keys.add(key);
             cursor.moveToNext();

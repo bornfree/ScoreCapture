@@ -2,6 +2,8 @@ package com.cameraomr.android;
 
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +49,8 @@ public class CameraActivity extends AppCompatActivity {
     private TemplatesDataSource templatesdatasource;
     private SectionsDataSource sectionsdatasource;
     private String mKeyId;
+    private int previousScore = 0;
+    private ToneGenerator toneG;
 
     static {
         if (!OpenCVLoader.initDebug()) {
@@ -93,6 +97,11 @@ public class CameraActivity extends AppCompatActivity {
             Frame frame = new Frame(data, mFrameSize);
             int debugIndex = getDebugIndex();
             int score = frame.process(debugIndex);
+            if(score != previousScore)
+            {
+                toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 100);
+                previousScore = score;
+            }
             frame.printProcessingTime();
             useResults(frame, debugIndex, score);
         }
@@ -120,6 +129,7 @@ public class CameraActivity extends AppCompatActivity {
         mDebugPerspective = (CheckBox) findViewById(R.id.debugPerspective);
         mDebugSection1 = (CheckBox) findViewById(R.id.debugSection1);
         mDebugSection2 = (CheckBox) findViewById(R.id.debugSection2);
+        toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 60);
 
         keydatasource = new KeysDataSource(this);
         templatesdatasource = new TemplatesDataSource(this);

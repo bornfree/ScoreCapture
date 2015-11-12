@@ -41,7 +41,7 @@ public class TemplatesDataSource {
         Cursor cursor = database.query(MySQLiteOpenHelper.TABLE_TEMPLATES,
                 allColumns, MySQLiteOpenHelper.TEMPLATE_COLUMN_ID + " = " + id, null,
                 null, null, null);
-        if(cursor == null)
+        if(cursor == null || cursor.getCount() == 0)
             return null;
         cursor.moveToFirst();
         Template template = cursorToTemplate(cursor);
@@ -85,7 +85,7 @@ public class TemplatesDataSource {
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast() && cursor.getCount() > 0) {
             Template template = cursorToTemplate(cursor);
             templates.add(template);
             cursor.moveToNext();

@@ -38,7 +38,7 @@ public class SectionsDataSource {
         Cursor cursor = database.query(MySQLiteOpenHelper.TABLE_SECTIONS,
                 allColumns, MySQLiteOpenHelper.SECTION_COLUMN_ID + " = " + id, null,
                 null, null, null);
-        if(cursor == null)
+        if(cursor == null || cursor.getCount() == 0)
             return null;
         cursor.moveToFirst();
         Section section = cursorToSection(cursor);
@@ -84,7 +84,7 @@ public class SectionsDataSource {
                 condition, null, null, null, null);
 
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast() && cursor.getCount() > 0) {
             Section section = cursorToSection(cursor);
             sections.add(section);
             cursor.moveToNext();

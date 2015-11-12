@@ -6,43 +6,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LandingActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/active_key_title"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/active_key_title"
+            android:id="@+id/textView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="No Keys Available"
-        android:id="@+id/activeKeyTitle"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="No Keys Available"
+            android:id="@+id/activeKeyTitle"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="40dip"
-        android:layout_marginRight="40dip"
-        android:layout_marginTop="101dp"
-        android:layout_alignParentEnd="true">
+        android:layout_marginBottom="40dip"
+        android:layout_alignParentEnd="true"
+        android:gravity="bottom">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="30dip"
-            android:layout_margin="10dip"
-            android:text="@string/button_start_checking"
-            android:id="@+id/startChecking"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/colorAccent"
-            android:textColor="@color/white"/>
+
 
         <LinearLayout
             android:orientation="horizontal"
@@ -59,7 +57,8 @@
                 android:id="@+id/setKey"
                 android:layout_margin="10dip"
                 android:background="@color/colorAccent"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:drawableRight="@drawable/ic_set_key"/>
 
             <Button
                 android:layout_width="0px"
@@ -70,9 +69,21 @@
                 android:id="@+id/addKey"
                 android:layout_margin="10dip"
                 android:background="@color/colorAccent"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:drawableRight="@drawable/ic_add_key"/>
 
         </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dip"
+            android:layout_margin="10dip"
+            android:text="@string/button_start_checking"
+            android:id="@+id/startChecking"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
+            android:drawableRight="@drawable/ic_start_checking"/>
 
 
     </LinearLayout>

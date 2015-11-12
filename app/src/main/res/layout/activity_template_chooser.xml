@@ -29,7 +29,8 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextTitle" />
+                android:id="@+id/editTextTitle"
+                android:inputType="textCapSentences"/>
 
         </LinearLayout>
 
@@ -53,15 +54,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/editTextDate"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     />
-                <Button
+                <ImageButton
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Pick"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:onClick="showDatePickerDialog"
-                    android:layout_gravity="center"
-                    android:layout_weight="2"/>
+                    android:src="@drawable/ic_pick_date"
+                    android:background="@color/colorAccent"/>
+
             </LinearLayout>
 
 
@@ -92,7 +94,7 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Next"
         android:id="@+id/nextButton"
@@ -100,7 +102,8 @@
         android:layout_centerHorizontal="true"
         android:background="@color/colorAccent"
         android:textColor="@color/white"
-        android:padding="20dip"/>
+        android:padding="20dip"
+        android:layout_alignParentBottom="true"/>
 
 
 </RelativeLayout>

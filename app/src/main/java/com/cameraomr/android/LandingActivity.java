@@ -24,6 +24,7 @@ public class LandingActivity extends AppCompatActivity {
 
     private boolean activeKeySet;
     private String activeKeyId;
+    private Key k;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class LandingActivity extends AppCompatActivity {
         mStartChecking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(activeKeySet == false)
+                if(activeKeySet == false || k == null)
                 {
                     Toast.makeText(LandingActivity.this, "Please add/set a key first", Toast.LENGTH_SHORT).show();
                     return;
@@ -82,7 +83,7 @@ public class LandingActivity extends AppCompatActivity {
         activeKeyId   = sharedPref.getString(getString(R.string.active_key_id), "");
         if(activeKeySet == true)
         {
-            Key k = keydatasource.getKey(activeKeyId);
+            k = keydatasource.getKey(activeKeyId);
             if(k != null) {
                 mActiveKeyTitle.setText(k.getTitle());
             }
