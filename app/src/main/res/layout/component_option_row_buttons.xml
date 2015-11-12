@@ -57,7 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="New ToggleButton"
-        android:id="@+id/toggleButton4"
+        android:id="@+id/toggleButton5"
         android:layout_weight="1"
         android:textOff="E"
         android:textOn="E"

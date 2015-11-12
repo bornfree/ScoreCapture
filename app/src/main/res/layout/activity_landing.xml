@@ -30,7 +30,6 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="40dip"
         android:layout_marginRight="40dip"
-        android:layout_below="@+id/textView2"
         android:layout_marginTop="101dp"
         android:layout_alignParentEnd="true">
 
