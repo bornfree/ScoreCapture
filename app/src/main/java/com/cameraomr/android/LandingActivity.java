@@ -82,7 +82,6 @@ public class LandingActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //resetSharedPreferences();
-        //resetSharedPreferences();
 
         keydatasource.open();
 

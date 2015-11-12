@@ -76,7 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center|top">
+            android:layout_gravity="center|top"
+            android:visibility="invisible">
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,23 +98,25 @@
                 android:id="@+id/debugSection2"/>
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:id="@+id/score"
+            android:layout_gravity="center"
+            android:textColor="#FF41D9E9"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Place dots inside the squares to scan"
             android:id="@+id/textView3"
-            android:layout_gravity="center|left"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/score"
-            android:layout_gravity="center|right"
-            android:textColor="@color/white"/>
+            android:layout_gravity="bottom|center_horizontal"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"/>
 
     </FrameLayout>
-
-
 
 </FrameLayout>
