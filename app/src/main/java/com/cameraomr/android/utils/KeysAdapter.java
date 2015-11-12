@@ -3,7 +3,6 @@ package com.cameraomr.android.utils;
 /**
  * Created by harsha on 9/11/15.
  */
-import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,6 +14,8 @@ import android.widget.TextView;
 
 import com.cameraomr.android.R;
 import com.cameraomr.android.classes.Key;
+
+import java.util.List;
 
 public class KeysAdapter extends BaseAdapter {
 
