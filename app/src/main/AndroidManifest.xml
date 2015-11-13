@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".LandingActivity" >
+        <activity android:name=".LandingActivity"
+            android:theme="@style/AppThemeLanding">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,8 +30,9 @@
             android:name=".KeyEditorActivity"
             android:label="Key" >
         </activity>
-        <activity android:name=".SelectKeyActivity"
-            android:label="Available Keys">
+        <activity
+            android:name=".SelectKeyActivity"
+            android:label="Available Keys" >
         </activity>
     </application>
 
