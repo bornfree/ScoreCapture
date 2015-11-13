@@ -1,5 +1,6 @@
 package com.cameraomr.android;
 
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.media.AudioManager;
@@ -13,8 +14,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.cameraomr.android.classes.Frame;
@@ -51,6 +54,7 @@ public class CameraActivity extends AppCompatActivity {
     private String mKeyId;
     private int previousScore = 0;
     private ToneGenerator toneG;
+    private Switch mFlash;
 
     static {
         if (!OpenCVLoader.initDebug()) {
@@ -130,6 +134,21 @@ public class CameraActivity extends AppCompatActivity {
         mDebugSection1 = (CheckBox) findViewById(R.id.debugSection1);
         mDebugSection2 = (CheckBox) findViewById(R.id.debugSection2);
         toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 60);
+        mFlash = (Switch) findViewById(R.id.flash_switch);
+
+        boolean hasFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        if (!hasFlash) {
+            mFlash.setVisibility(Switch.INVISIBLE);
+        }else
+        {
+            mFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    toggleFlash();
+                }
+            });
+        }
+
 
         keydatasource = new KeysDataSource(this);
         templatesdatasource = new TemplatesDataSource(this);
@@ -183,8 +202,6 @@ public class CameraActivity extends AppCompatActivity {
 
     public void setKeyTemplateSections(String keyId)
     {
-
-
         Key k = keydatasource.getKey(keyId);
         if(k != null){
 
@@ -300,5 +317,21 @@ public class CameraActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    public void toggleFlash()
+    {
+        if(mCamera == null)
+            return;
+        Camera.Parameters params = mCamera.getParameters();
+        String abc =params.getFlashMode();
+        if(params.getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH))
+        {
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        }else if(params.getFlashMode().equals(Camera.Parameters.FLASH_MODE_OFF))
+        {
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        }
+        mCamera.setParameters(params);
     }
 }

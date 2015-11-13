@@ -128,7 +128,7 @@ public class TemplateChooserActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             EditText cDate = (EditText) getActivity().findViewById(R.id.editTextDate);
-            cDate.setText("" + year + "-" + month + "-" + day);
+            cDate.setText("" + year + "-" + (month+1) + "-" + day);
         }
     }
 }
