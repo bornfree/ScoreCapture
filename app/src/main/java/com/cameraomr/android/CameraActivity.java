@@ -2,6 +2,8 @@ package com.cameraomr.android;
 
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -29,9 +31,20 @@ import com.cameraomr.android.db.KeysDataSource;
 import com.cameraomr.android.db.SectionsDataSource;
 import com.cameraomr.android.db.TemplatesDataSource;
 import com.cameraomr.android.utils.CameraPreview;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Reader;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.oned.CodaBarReader;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
+import org.opencv.core.Mat;
 
 import java.util.List;
 
@@ -55,6 +68,8 @@ public class CameraActivity extends AppCompatActivity {
     private int previousScore = 0;
     private ToneGenerator toneG;
     private Switch mFlash;
+    private FrameLayout markerTL, markerTR, markerBL, markerBR;
+    private GradientDrawable markerRed, markerGreen;
 
     static {
         if (!OpenCVLoader.initDebug()) {
@@ -101,13 +116,18 @@ public class CameraActivity extends AppCompatActivity {
             Frame frame = new Frame(data, mFrameSize);
             int debugIndex = getDebugIndex();
             int score = frame.process(debugIndex);
-            if(score != previousScore)
+            setMarkerColor(score);
+
+            if(score != -1 && score != previousScore)
             {
                 toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 100);
                 previousScore = score;
             }
-            frame.printProcessingTime();
+
+
             useResults(frame, debugIndex, score);
+            frame.printProcessingTime();
+
         }
     };
 
@@ -135,6 +155,14 @@ public class CameraActivity extends AppCompatActivity {
         mDebugSection2 = (CheckBox) findViewById(R.id.debugSection2);
         toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 60);
         mFlash = (Switch) findViewById(R.id.flash_switch);
+
+        markerTL = (FrameLayout) findViewById(R.id.marker_tl);
+        markerTR = (FrameLayout) findViewById(R.id.marker_tr);
+        markerBL = (FrameLayout) findViewById(R.id.marker_bl);
+        markerBR = (FrameLayout) findViewById(R.id.marker_br);
+        markerRed = (GradientDrawable) getResources().getDrawable(R.drawable.rounded_square);
+        markerGreen = (GradientDrawable) getResources().getDrawable(R.drawable.rounded_square_green);
+
 
         boolean hasFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if (!hasFlash) {
@@ -304,7 +332,8 @@ public class CameraActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                mScore.setText("Score: "+ score);
+                if(score >= 0)
+                    mScore.setText("Score: "+ score);
                 if(debugMode == 0)
                 {
                     mMatDebug.setImageBitmap(null);
@@ -316,6 +345,29 @@ public class CameraActivity extends AppCompatActivity {
                 mMatDebug.setImageBitmap(resultBitmap);
             }
 
+        });
+    }
+
+    public void setMarkerColor(final int score)
+    {
+        this.runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                if(score == -1)
+                {
+                    markerTL.setBackground(markerRed);
+                    markerTR.setBackground(markerRed);
+                    markerBL.setBackground(markerRed);
+                    markerBR.setBackground(markerRed);
+                }else
+                {
+                    markerTL.setBackground(markerGreen);
+                    markerTR.setBackground(markerGreen);
+                    markerBL.setBackground(markerGreen);
+                    markerBR.setBackground(markerGreen);
+                }
+            }
         });
     }
 

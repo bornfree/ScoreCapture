@@ -30,6 +30,7 @@ public class Frame {
     public int process(int debugMode)
     {
         int score = processFrame(mFrame.getNativeObjAddr(), debugMode);
+        // score is -1 if pattern doesnt exist
         mEndTime = System.nanoTime();
         return score;
     }
