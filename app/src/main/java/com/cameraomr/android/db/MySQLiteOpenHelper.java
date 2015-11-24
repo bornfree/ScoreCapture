@@ -108,10 +108,12 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         // Add section 1
         values.clear();
         values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
-        values.put(SECTION_COLUMN_HEIGHT, 432);
-        values.put(SECTION_COLUMN_WIDTH, 172);
         values.put(SECTION_COLUMN_TOP, 161);
         values.put(SECTION_COLUMN_LEFT, 56);
+        values.put(SECTION_COLUMN_WIDTH, 172);
+        values.put(SECTION_COLUMN_HEIGHT, 432);
+
+
         values.put(SECTION_COLUMN_NUM_ANSWERS, 10);
         long sId = db.insert(TABLE_SECTIONS, null, values);
 

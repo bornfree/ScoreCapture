@@ -31,17 +31,6 @@ import com.cameraomr.android.db.KeysDataSource;
 import com.cameraomr.android.db.SectionsDataSource;
 import com.cameraomr.android.db.TemplatesDataSource;
 import com.cameraomr.android.utils.CameraPreview;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.Reader;
-import com.google.zxing.Result;
-import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.oned.CodaBarReader;
-
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
@@ -333,7 +322,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(score >= 0)
-                    mScore.setText("Score: "+ score);
+                    mScore.setText("Score : "+ score);
                 if(debugMode == 0)
                 {
                     mMatDebug.setImageBitmap(null);
