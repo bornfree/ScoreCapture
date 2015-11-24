@@ -36,7 +36,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "cameraomr.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
 
     // Database creation sql statement
     private static final String KEYS_TABLE_CREATE = "create table "
@@ -108,41 +108,117 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         // Add section 1
         values.clear();
         values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
-        values.put(SECTION_COLUMN_TOP, 161);
-        values.put(SECTION_COLUMN_LEFT, 56);
-        values.put(SECTION_COLUMN_WIDTH, 172);
-        values.put(SECTION_COLUMN_HEIGHT, 432);
-
-
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 40);
+        values.put(SECTION_COLUMN_WIDTH, 180);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
         values.put(SECTION_COLUMN_NUM_ANSWERS, 10);
         long sId = db.insert(TABLE_SECTIONS, null, values);
 
         // Add section 2
         values.clear();
         values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
-        values.put(SECTION_COLUMN_HEIGHT, 432);
-        values.put(SECTION_COLUMN_WIDTH, 172);
-        values.put(SECTION_COLUMN_TOP, 161);
-        values.put(SECTION_COLUMN_LEFT, 283);
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 260);
+        values.put(SECTION_COLUMN_WIDTH, 180);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
         values.put(SECTION_COLUMN_NUM_ANSWERS, 10);
         sId = db.insert(TABLE_SECTIONS, null, values);
 
-        // Insert the base 10 questions, 5 answers template
+        // Insert the base 30 questions, 5 answers template
         values.clear();
         values.put(TEMPLATE_COLUMN_HEIGHT, 640);
         values.put(TEMPLATE_COLUMN_WIDTH, 480);
-        values.put(TEMPLATE_COLUMN_NUM_ANSWERS, 10);
+        values.put(TEMPLATE_COLUMN_NUM_ANSWERS, 30);
         values.put(TEMPLATE_COLUMN_NUM_OPTIONS, 5);
         tId = db.insert(TABLE_TEMPLATES, null, values);
 
         // Add section 1
         values.clear();
         values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
-        values.put(SECTION_COLUMN_HEIGHT, 432);
-        values.put(SECTION_COLUMN_WIDTH, 172);
-        values.put(SECTION_COLUMN_TOP, 161);
-        values.put(SECTION_COLUMN_LEFT, 56);
-        values.put(SECTION_COLUMN_NUM_ANSWERS, 10);
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 40);
+        values.put(SECTION_COLUMN_WIDTH, 180);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
+        values.put(SECTION_COLUMN_NUM_ANSWERS, 15);
         sId = db.insert(TABLE_SECTIONS, null, values);
+
+        // Add section 2
+        values.clear();
+        values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 260);
+        values.put(SECTION_COLUMN_WIDTH, 180);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
+        values.put(SECTION_COLUMN_NUM_ANSWERS, 15);
+        sId = db.insert(TABLE_SECTIONS, null, values);
+
+        // Insert the base 40 questions, 5 answers template
+        values.clear();
+        values.put(TEMPLATE_COLUMN_HEIGHT, 640);
+        values.put(TEMPLATE_COLUMN_WIDTH, 480);
+        values.put(TEMPLATE_COLUMN_NUM_ANSWERS, 40);
+        values.put(TEMPLATE_COLUMN_NUM_OPTIONS, 5);
+        tId = db.insert(TABLE_TEMPLATES, null, values);
+
+        // Add section 1
+        values.clear();
+        values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 40);
+        values.put(SECTION_COLUMN_WIDTH, 180);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
+        values.put(SECTION_COLUMN_NUM_ANSWERS, 20);
+        sId = db.insert(TABLE_SECTIONS, null, values);
+
+        // Add section 2
+        values.clear();
+        values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 260);
+        values.put(SECTION_COLUMN_WIDTH, 180);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
+        values.put(SECTION_COLUMN_NUM_ANSWERS, 20);
+        sId = db.insert(TABLE_SECTIONS, null, values);
+
+        // Insert the base 90 questions, 5 answers template
+        values.clear();
+        values.put(TEMPLATE_COLUMN_HEIGHT, 640);
+        values.put(TEMPLATE_COLUMN_WIDTH, 480);
+        values.put(TEMPLATE_COLUMN_NUM_ANSWERS, 90);
+        values.put(TEMPLATE_COLUMN_NUM_OPTIONS, 5);
+        tId = db.insert(TABLE_TEMPLATES, null, values);
+
+        // Add section 1
+        values.clear();
+        values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 40);
+        values.put(SECTION_COLUMN_WIDTH, 106);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
+        values.put(SECTION_COLUMN_NUM_ANSWERS, 30);
+        sId = db.insert(TABLE_SECTIONS, null, values);
+
+        // Add section 2
+        values.clear();
+        values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 186);
+        values.put(SECTION_COLUMN_WIDTH, 106);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
+        values.put(SECTION_COLUMN_NUM_ANSWERS, 30);
+        sId = db.insert(TABLE_SECTIONS, null, values);
+
+        // Add section 3
+        values.clear();
+        values.put(SECTION_COLUMN_TEMPLATE_ID, tId);
+        values.put(SECTION_COLUMN_TOP, 120);
+        values.put(SECTION_COLUMN_LEFT, 333);
+        values.put(SECTION_COLUMN_WIDTH, 106);
+        values.put(SECTION_COLUMN_HEIGHT, 500);
+        values.put(SECTION_COLUMN_NUM_ANSWERS, 30);
+        sId = db.insert(TABLE_SECTIONS, null, values);
+
+
     }
 }
